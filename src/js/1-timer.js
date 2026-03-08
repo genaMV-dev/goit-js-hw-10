@@ -11,12 +11,17 @@ import "izitoast/dist/css/iziToast.min.css";
 
 
 const startBtn = document.querySelector(`button`);
-const timer = document.querySelector(`.timer`);
+const inpCalendar = document.querySelector(`#datetime-picker`);
+const daysEl = document.querySelector("[data-days]");
+const hoursEl = document.querySelector("[data-hours]");
+const minutesEl = document.querySelector("[data-minutes]");
+const secondsEl = document.querySelector("[data-seconds]");
 
 let intervalId;
 let userSelectedDate;
 
 startBtn.disabled = true;
+inpCalendar.disabled = false;
 
 flatpickr("#datetime-picker", {
   enableTime: true,
@@ -27,7 +32,7 @@ flatpickr("#datetime-picker", {
     console.log(selectedDates[0]);
     const now = Date.now();
     userSelectedDate = selectedDates[0].getTime();
-    if(userSelectedDate < now){
+    if(userSelectedDate <= now){
         iziToast.show({
         title: 'Error',
         message: 'Please choose a date in the future',
@@ -77,9 +82,12 @@ startBtn.addEventListener("click", () => {
 
     if (diff <= 0) {
       clearInterval(intervalId);
-      startBtn.disabled = false;
-      return;
+      inpCalendar.disabled = false;
+      return; // ⬅️ КЛЮЧОВЕ
     }
+
+    startBtn.disabled = true;
+    inpCalendar.disabled = true;
 
     const str = convertMs(diff);
 
@@ -88,23 +96,9 @@ startBtn.addEventListener("click", () => {
     const minutes = addLeadingZero(str.minutes);
     const seconds = addLeadingZero(str.seconds);
 
-    timer.innerHTML = `<div class="field">
-      <span class="value" data-days>${days}</span>
-      <span class="label">Days</span>
-    </div>
-    <div class="field">
-      <span class="value" data-hours>${hours}</span>
-      <span class="label">Hours</span>
-    </div>
-    <div class="field">
-      <span class="value" data-minutes>${minutes}</span>
-      <span class="label">Minutes</span>
-    </div>
-    <div class="field">
-      <span class="value" data-seconds>${seconds}</span>
-      <span class="label">Seconds</span>
-    </div>`;
-
-    startBtn.disabled = true;
+    daysEl.innerHTML = days;
+    hoursEl.innerHTML = hours;
+    minutesEl.innerHTML = minutes;
+    secondsEl.innerHTML = seconds;
   }, 1000);
 });
