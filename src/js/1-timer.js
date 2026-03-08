@@ -76,6 +76,9 @@ function addLeadingZero(value) {
 startBtn.addEventListener("click", () => {
   const futureTime = userSelectedDate;
 
+  startBtn.disabled = true;
+  inpCalendar.disabled = true;
+
   intervalId = setInterval(() => {
     const currentTime = Date.now();
     const diff = futureTime - currentTime;
@@ -83,11 +86,11 @@ startBtn.addEventListener("click", () => {
     if (diff <= 0) {
       clearInterval(intervalId);
       inpCalendar.disabled = false;
-      return; // ⬅️ КЛЮЧОВЕ
+      [daysEl, hoursEl, minutesEl, secondsEl].forEach(el => el.innerHTML = "00");
+      return; 
     }
 
-    startBtn.disabled = true;
-    inpCalendar.disabled = true;
+    
 
     const str = convertMs(diff);
 
