@@ -1,0 +1,2 @@
+import"./assets/modulepreload-polyfill-B5Qt9EMX.js";/* empty css                      */import{i as s}from"./assets/vendor-BbbuE1sJ.js";const o=document.querySelector(".form");o.addEventListener("submit",m=>{m.preventDefault();const t=new FormData(o),e=Number(t.get("delay")),r=t.get("state");setTimeout(()=>{new Promise((i,a)=>{r==="fulfilled"?s.show({message:`✅ Fulfilled promise in ${e}ms`}):s.show({message:`❌ Rejected promise in ${e}ms`})})},e)});
+//# sourceMappingURL=2-snackbar.js.map
