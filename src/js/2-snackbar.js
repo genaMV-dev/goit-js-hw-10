@@ -14,22 +14,22 @@ form.addEventListener("submit", e => {
   const promise = new Promise((res, rej) => {
     setTimeout(() => {
       if (state === "fulfilled") {
-        res();
+        res(delay);
       } else {
-        rej();
+        rej(delay);
       }
     }, delay);
   });
 
   promise
-  .then(() =>{
+  .then((value) =>{
     iziToast.show({
-          message: `✅ Fulfilled promise in ${delay}ms`,
+          message: `✅ Fulfilled promise in ${value}ms`,
         })
   })
-  .catch(() =>{
+  .catch((value) =>{
     iziToast.show({
-          message: `❌ Rejected promise in ${delay}ms`,
+          message: `❌ Rejected promise in ${value}ms`,
         })
   })
 });
