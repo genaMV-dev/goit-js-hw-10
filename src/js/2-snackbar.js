@@ -11,17 +11,25 @@ form.addEventListener("submit", e => {
   const delay = Number(formData.get("delay"));
   const state = formData.get("state");
 
-  setTimeout(() => {
-    const promise = new Promise((res, rej) => {
+  const promise = new Promise((res, rej) => {
+    setTimeout(() => {
       if (state === "fulfilled") {
-        iziToast.show({
-          message: `✅ Fulfilled promise in ${delay}ms`,
-        });
+        res();
       } else {
-        iziToast.show({
-          message: `❌ Rejected promise in ${delay}ms`,
-        });
+        rej();
       }
-    });
-  }, delay);
+    }, delay);
+  });
+
+  promise
+  .then(() =>{
+    iziToast.show({
+          message: `✅ Fulfilled promise in ${delay}ms`,
+        })
+  })
+  .catch(() =>{
+    iziToast.show({
+          message: `❌ Rejected promise in ${delay}ms`,
+        })
+  })
 });
